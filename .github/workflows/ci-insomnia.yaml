@@ -1,32 +1,34 @@
-# This is a basic workflow to help you get started with Actions
-
+# Nome do workflow
 name: CI Marvel
 
-# Controls when the workflow will run
+# Controla quando o workflow será executado
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-
   pull_request:
-    branches: ["main"]
+    branches: ["main"] # Executa em PRs direcionadas para a branch "main"
+  workflow_dispatch: # Permite execução manual
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# Define os jobs do pipeline
 jobs:
   Linux:
     name: Testes com Insomnia Udemy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Máquina virtual usada para rodar o job
+
     steps:
+      # Faz o checkout do repositório
       - name: Checkout branch
-        uses: actions/checkout@v1
-      - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/checkout@v3 # Atualizado para versão mais recente
+
+      # Configura o Node.js no ambiente
+      - name: Setup Node.js
+        uses: actions/setup-node@v3 # Atualizado para a versão mais recente
         with:
-          node-version: "14"
+          node-version: "14" # Define a versão do Node.js
+
+      # Instala o Insomnia CLI (Inso CLI)
       - name: Install Inso CLI
         run: npm install -g insomnia-inso
 
+      # Executa os testes definidos no Insomnia
       - name: Run Insomnia Tests
         run: |
           inso run test "Comics" --src ./insomnia/Insomnia-project.json --env "Produção" --verbose

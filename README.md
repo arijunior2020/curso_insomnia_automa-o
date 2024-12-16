@@ -1,3 +1,3 @@
 # curso_insomnia_automação
 
-- Nova branch adicionada
+- Teste Pipeline
